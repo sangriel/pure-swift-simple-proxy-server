@@ -36,6 +36,7 @@ extension ViewController {
             imageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
+        
     }
     
     

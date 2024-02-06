@@ -12,7 +12,8 @@ import Darwin
 
 protocol ServerSocketInterface {
     func start() throws
-    
+    func stop()
+    func acceptClientSocket() -> ClientSocket?
 }
 
 class ServerSocket : NSObject, ServerSocketInterface {
@@ -79,5 +80,15 @@ class ServerSocket : NSObject, ServerSocketInterface {
     }
     
     
+    func stop() {
+        if let socket = socket {
+            CFSocketInvalidate(socket)
+        }
+        self.socket = nil
+    }
     
+    func acceptClientSocket() -> ClientSocket? {
+        //TODO: - implement after creating client socket
+        return nil
+    }
 }

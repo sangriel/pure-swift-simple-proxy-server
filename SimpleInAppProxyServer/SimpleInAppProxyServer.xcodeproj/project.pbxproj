@@ -13,6 +13,10 @@
 		2F153F6F2B711C1800B87430 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F153F6D2B711C1800B87430 /* Main.storyboard */; };
 		2F153F712B711C1900B87430 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F153F702B711C1900B87430 /* Assets.xcassets */; };
 		2F153F742B711C1900B87430 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F153F722B711C1900B87430 /* LaunchScreen.storyboard */; };
+		2F153F7D2B711E4900B87430 /* ServerSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F153F7C2B711E4900B87430 /* ServerSocket.swift */; };
+		2F30B29A2B725B8400AB8496 /* MyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B2992B725B8400AB8496 /* MyLogger.swift */; };
+		2F30B29D2B725E6700AB8496 /* SocketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B29C2B725E6600AB8496 /* SocketError.swift */; };
+		2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B29E2B72606900AB8496 /* ClientSocket.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		2F153F702B711C1900B87430 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F153F732B711C1900B87430 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F153F752B711C1900B87430 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F153F7C2B711E4900B87430 /* ServerSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerSocket.swift; sourceTree = "<group>"; };
+		2F30B2992B725B8400AB8496 /* MyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLogger.swift; sourceTree = "<group>"; };
+		2F30B29C2B725E6600AB8496 /* SocketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketError.swift; sourceTree = "<group>"; };
+		2F30B29E2B72606900AB8496 /* ClientSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSocket.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,9 @@
 		2F153F662B711C1800B87430 /* SimpleInAppProxyServer */ = {
 			isa = PBXGroup;
 			children = (
+				2F30B29B2B725E5E00AB8496 /* Error */,
+				2F30B2982B725B3200AB8496 /* Util */,
+				2F153F7B2B711E4000B87430 /* Sockets */,
 				2F153F672B711C1800B87430 /* AppDelegate.swift */,
 				2F153F692B711C1800B87430 /* SceneDelegate.swift */,
 				2F153F6B2B711C1800B87430 /* ViewController.swift */,
@@ -65,6 +76,31 @@
 				2F153F752B711C1900B87430 /* Info.plist */,
 			);
 			path = SimpleInAppProxyServer;
+			sourceTree = "<group>";
+		};
+		2F153F7B2B711E4000B87430 /* Sockets */ = {
+			isa = PBXGroup;
+			children = (
+				2F153F7C2B711E4900B87430 /* ServerSocket.swift */,
+				2F30B29E2B72606900AB8496 /* ClientSocket.swift */,
+			);
+			path = Sockets;
+			sourceTree = "<group>";
+		};
+		2F30B2982B725B3200AB8496 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				2F30B2992B725B8400AB8496 /* MyLogger.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		2F30B29B2B725E5E00AB8496 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				2F30B29C2B725E6600AB8496 /* SocketError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +175,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F153F6C2B711C1800B87430 /* ViewController.swift in Sources */,
+				2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */,
+				2F153F7D2B711E4900B87430 /* ServerSocket.swift in Sources */,
+				2F30B29A2B725B8400AB8496 /* MyLogger.swift in Sources */,
+				2F30B29D2B725E6700AB8496 /* SocketError.swift in Sources */,
 				2F153F682B711C1800B87430 /* AppDelegate.swift in Sources */,
 				2F153F6A2B711C1800B87430 /* SceneDelegate.swift in Sources */,
 			);

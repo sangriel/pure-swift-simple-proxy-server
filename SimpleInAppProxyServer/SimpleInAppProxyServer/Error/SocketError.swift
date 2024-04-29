@@ -12,5 +12,6 @@ enum SocketError : Error {
     case FileDescriptionCreationFailed
     case SocketOptionSettingFailed
     case SocketBindingFailed
+    case SocketReadFailed
 }
 

@@ -13,5 +13,6 @@ enum SocketError : Error {
     case SocketOptionSettingFailed
     case SocketBindingFailed
     case SocketReadFailed
+    case SocketAcceptFailed
 }
 

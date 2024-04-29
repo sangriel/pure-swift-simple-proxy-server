@@ -26,7 +26,13 @@ extension OutputStream {
     }
 }
 
-class ClientSocket : NSObject {
+protocol ClientSocketInterface {
+    func send(data : Data) throws
+    func receive(maxLength : Int) throws -> Data?
+    func close()
+}
+
+class ClientSocket : NSObject, ClientSocketInterface {
     
     var fileDescriptor: Int32
     private var inputStream: InputStream!

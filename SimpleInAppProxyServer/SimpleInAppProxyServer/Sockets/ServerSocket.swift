@@ -13,7 +13,7 @@ import Darwin
 protocol ServerSocketInterface {
     func start() throws
     func stop()
-    func acceptClientSocket() -> ClientSocket?
+    func acceptClientSocket() throws -> ClientSocket?
 }
 
 class ServerSocket : NSObject, ServerSocketInterface {
@@ -87,8 +87,22 @@ class ServerSocket : NSObject, ServerSocketInterface {
         self.socket = nil
     }
     
-    func acceptClientSocket() -> ClientSocket? {
-        //TODO: - implement after creating client socket
-        return nil
+    func acceptClientSocket() throws ->  ClientSocket? {
+        guard let socket = self.socket else {
+            throw SocketError.FileDescriptionCreationFailed
+        }
+        let fileDescriptor = CFSocketGetNative(socket)
+        var clientAddress = sockaddr()
+        var clientAddressLength = socklen_t(MemoryLayout<sockaddr>.size)
+        let clientFileDescriptor = Darwin.accept(fileDescriptor, &clientAddress, &clientAddressLength)
+        guard clientFileDescriptor >= 0 else {
+            throw SocketError.SocketAcceptFailed
+        }
+        do {
+            return try ClientSocket(fileDescriptor: clientFileDescriptor, address: clientAddress)
+        }
+        catch(_) {
+            throw SocketError.SocketAcceptFailed
+        }
     }
 }

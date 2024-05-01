@@ -17,6 +17,7 @@
 		2F30B29A2B725B8400AB8496 /* MyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B2992B725B8400AB8496 /* MyLogger.swift */; };
 		2F30B29D2B725E6700AB8496 /* SocketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B29C2B725E6600AB8496 /* SocketError.swift */; };
 		2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B29E2B72606900AB8496 /* ClientSocket.swift */; };
+		2F590C7A2BE292F8000BBACE /* ProxyHTTPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		2F30B2992B725B8400AB8496 /* MyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLogger.swift; sourceTree = "<group>"; };
 		2F30B29C2B725E6600AB8496 /* SocketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketError.swift; sourceTree = "<group>"; };
 		2F30B29E2B72606900AB8496 /* ClientSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSocket.swift; sourceTree = "<group>"; };
+		2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyHTTPServer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		2F153F662B711C1800B87430 /* SimpleInAppProxyServer */ = {
 			isa = PBXGroup;
 			children = (
+				2F590C782BE292EC000BBACE /* ProxyHTTPServer */,
 				2F30B29B2B725E5E00AB8496 /* Error */,
 				2F30B2982B725B3200AB8496 /* Util */,
 				2F153F7B2B711E4000B87430 /* Sockets */,
@@ -101,6 +104,14 @@
 				2F30B29C2B725E6600AB8496 /* SocketError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		2F590C782BE292EC000BBACE /* ProxyHTTPServer */ = {
+			isa = PBXGroup;
+			children = (
+				2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */,
+			);
+			path = ProxyHTTPServer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +188,7 @@
 				2F153F6C2B711C1800B87430 /* ViewController.swift in Sources */,
 				2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */,
 				2F153F7D2B711E4900B87430 /* ServerSocket.swift in Sources */,
+				2F590C7A2BE292F8000BBACE /* ProxyHTTPServer.swift in Sources */,
 				2F30B29A2B725B8400AB8496 /* MyLogger.swift in Sources */,
 				2F30B29D2B725E6700AB8496 /* SocketError.swift in Sources */,
 				2F153F682B711C1800B87430 /* AppDelegate.swift in Sources */,

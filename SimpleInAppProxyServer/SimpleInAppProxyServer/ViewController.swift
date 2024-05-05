@@ -45,7 +45,9 @@ extension ViewController {
         ])
         
     }
-    
-    
-    
+}
+extension ViewController : ProxyHttpServerDelegate {
+    func proxyHttpServer(onError: ProxyServerError) {
+        print(onError)
+    }
 }

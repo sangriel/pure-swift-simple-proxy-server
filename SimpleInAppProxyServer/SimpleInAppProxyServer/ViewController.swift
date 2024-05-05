@@ -17,10 +17,18 @@ class ViewController: UIViewController {
         return imageView
     }()
     
+    private let proxyServer = ProxyHTTPServer()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setLayout()
+        
+        proxyServer.startProxyServer { receivedData, response in
+            
+            response(Data())
+        }
     }
 
 

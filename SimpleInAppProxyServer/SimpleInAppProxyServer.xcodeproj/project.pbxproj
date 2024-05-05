@@ -18,6 +18,7 @@
 		2F30B29D2B725E6700AB8496 /* SocketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B29C2B725E6600AB8496 /* SocketError.swift */; };
 		2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B29E2B72606900AB8496 /* ClientSocket.swift */; };
 		2F590C7A2BE292F8000BBACE /* ProxyHTTPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */; };
+		2FA627EE2BE7F77D0044272C /* ProxyServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		2F30B29C2B725E6600AB8496 /* SocketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketError.swift; sourceTree = "<group>"; };
 		2F30B29E2B72606900AB8496 /* ClientSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSocket.swift; sourceTree = "<group>"; };
 		2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyHTTPServer.swift; sourceTree = "<group>"; };
+		2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyServerError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				2F30B29C2B725E6600AB8496 /* SocketError.swift */,
+				2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F153F6C2B711C1800B87430 /* ViewController.swift in Sources */,
+				2FA627EE2BE7F77D0044272C /* ProxyServerError.swift in Sources */,
 				2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */,
 				2F153F7D2B711E4900B87430 /* ServerSocket.swift in Sources */,
 				2F590C7A2BE292F8000BBACE /* ProxyHTTPServer.swift in Sources */,

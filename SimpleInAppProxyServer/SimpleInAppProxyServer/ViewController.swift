@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVKit
 
 class ViewController: UIViewController {
 
@@ -19,6 +20,8 @@ class ViewController: UIViewController {
     
     private let proxyServer = ProxyHTTPServer()
     
+    private var player : AVPlayer?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +32,11 @@ class ViewController: UIViewController {
             
             response(Data())
         }
+        
+        guard let reverseUrl = ReverserProxyUrlMaker.makeReverProxyUrl(url: URL(string: "someUrl")!, originUrlQueryKey: "originKey") else { return }
+        player = AVPlayer(url: reverseUrl )
+        
+        
     }
 
 

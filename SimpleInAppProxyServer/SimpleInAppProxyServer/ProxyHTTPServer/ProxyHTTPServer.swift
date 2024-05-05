@@ -24,7 +24,7 @@ protocol ProxyHttpServerDelegate {
 class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
     typealias RequestHandler = ((Data, (Data) -> () ) -> ())
     
-    private let originURLKey = "originKey"
+    private var originURLKey = "originKey"
     private var originURLHost : String?
     private var serverSocket: ServerSocket?
     private var clientSocket : ClientSocket?

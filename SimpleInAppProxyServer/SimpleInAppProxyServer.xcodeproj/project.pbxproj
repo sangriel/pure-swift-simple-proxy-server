@@ -20,7 +20,19 @@
 		2F590C7A2BE292F8000BBACE /* ProxyHTTPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */; };
 		2FA627EE2BE7F77D0044272C /* ProxyServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */; };
 		2FA627F12BE7F9720044272C /* ReverserProxyUrlMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */; };
+		2FA627F92BE7FB9E0044272C /* SimpleInAppProxyServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627F82BE7FB9E0044272C /* SimpleInAppProxyServerTests.swift */; };
+		2FA628002BE7FF700044272C /* HLSParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627FF2BE7FF700044272C /* HLSParser.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2FA627FA2BE7FB9E0044272C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F153F5C2B711C1800B87430 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F153F632B711C1800B87430;
+			remoteInfo = SimpleInAppProxyServer;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2F153F642B711C1800B87430 /* SimpleInAppProxyServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleInAppProxyServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,10 +50,20 @@
 		2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyHTTPServer.swift; sourceTree = "<group>"; };
 		2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyServerError.swift; sourceTree = "<group>"; };
 		2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverserProxyUrlMaker.swift; sourceTree = "<group>"; };
+		2FA627F62BE7FB9E0044272C /* SimpleInAppProxyServerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleInAppProxyServerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FA627F82BE7FB9E0044272C /* SimpleInAppProxyServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInAppProxyServerTests.swift; sourceTree = "<group>"; };
+		2FA627FF2BE7FF700044272C /* HLSParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLSParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2F153F612B711C1800B87430 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FA627F32BE7FB9E0044272C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -55,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				2F153F662B711C1800B87430 /* SimpleInAppProxyServer */,
+				2FA627F72BE7FB9E0044272C /* SimpleInAppProxyServerTests */,
 				2F153F652B711C1800B87430 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				2F153F642B711C1800B87430 /* SimpleInAppProxyServer.app */,
+				2FA627F62BE7FB9E0044272C /* SimpleInAppProxyServerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,8 +148,17 @@
 			isa = PBXGroup;
 			children = (
 				2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */,
+				2FA627FF2BE7FF700044272C /* HLSParser.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		2FA627F72BE7FB9E0044272C /* SimpleInAppProxyServerTests */ = {
+			isa = PBXGroup;
+			children = (
+				2FA627F82BE7FB9E0044272C /* SimpleInAppProxyServerTests.swift */,
+			);
+			path = SimpleInAppProxyServerTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +181,24 @@
 			productReference = 2F153F642B711C1800B87430 /* SimpleInAppProxyServer.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2FA627F52BE7FB9E0044272C /* SimpleInAppProxyServerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FA627FC2BE7FB9E0044272C /* Build configuration list for PBXNativeTarget "SimpleInAppProxyServerTests" */;
+			buildPhases = (
+				2FA627F22BE7FB9E0044272C /* Sources */,
+				2FA627F32BE7FB9E0044272C /* Frameworks */,
+				2FA627F42BE7FB9E0044272C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2FA627FB2BE7FB9E0044272C /* PBXTargetDependency */,
+			);
+			name = SimpleInAppProxyServerTests;
+			productName = SimpleInAppProxyServerTests;
+			productReference = 2FA627F62BE7FB9E0044272C /* SimpleInAppProxyServerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -155,11 +206,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					2F153F632B711C1800B87430 = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					2FA627F52BE7FB9E0044272C = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = 2F153F632B711C1800B87430;
 					};
 				};
 			};
@@ -177,6 +232,7 @@
 			projectRoot = "";
 			targets = (
 				2F153F632B711C1800B87430 /* SimpleInAppProxyServer */,
+				2FA627F52BE7FB9E0044272C /* SimpleInAppProxyServerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -189,6 +245,13 @@
 				2F153F742B711C1900B87430 /* LaunchScreen.storyboard in Resources */,
 				2F153F712B711C1900B87430 /* Assets.xcassets in Resources */,
 				2F153F6F2B711C1800B87430 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FA627F42BE7FB9E0044272C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,10 +272,27 @@
 				2F153F682B711C1800B87430 /* AppDelegate.swift in Sources */,
 				2F153F6A2B711C1800B87430 /* SceneDelegate.swift in Sources */,
 				2FA627F12BE7F9720044272C /* ReverserProxyUrlMaker.swift in Sources */,
+				2FA628002BE7FF700044272C /* HLSParser.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FA627F22BE7FB9E0044272C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FA627F92BE7FB9E0044272C /* SimpleInAppProxyServerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2FA627FB2BE7FB9E0044272C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2F153F632B711C1800B87430 /* SimpleInAppProxyServer */;
+			targetProxy = 2FA627FA2BE7FB9E0044272C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2F153F6D2B711C1800B87430 /* Main.storyboard */ = {
@@ -404,6 +484,59 @@
 			};
 			name = Release;
 		};
+		2FA627FD2BE7FB9E0044272C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9Y7C23MX88;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hsm.SimpleInAppProxyServerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleInAppProxyServer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SimpleInAppProxyServer";
+			};
+			name = Debug;
+		};
+		2FA627FE2BE7FB9E0044272C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9Y7C23MX88;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = hsm.SimpleInAppProxyServerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleInAppProxyServer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SimpleInAppProxyServer";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -421,6 +554,15 @@
 			buildConfigurations = (
 				2F153F792B711C1900B87430 /* Debug */,
 				2F153F7A2B711C1900B87430 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2FA627FC2BE7FB9E0044272C /* Build configuration list for PBXNativeTarget "SimpleInAppProxyServerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FA627FD2BE7FB9E0044272C /* Debug */,
+				2FA627FE2BE7FB9E0044272C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

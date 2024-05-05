@@ -19,6 +19,7 @@
 		2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B29E2B72606900AB8496 /* ClientSocket.swift */; };
 		2F590C7A2BE292F8000BBACE /* ProxyHTTPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */; };
 		2FA627EE2BE7F77D0044272C /* ProxyServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */; };
+		2FA627F12BE7F9720044272C /* ReverserProxyUrlMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		2F30B29E2B72606900AB8496 /* ClientSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSocket.swift; sourceTree = "<group>"; };
 		2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyHTTPServer.swift; sourceTree = "<group>"; };
 		2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyServerError.swift; sourceTree = "<group>"; };
+		2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverserProxyUrlMaker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 		2F153F662B711C1800B87430 /* SimpleInAppProxyServer */ = {
 			isa = PBXGroup;
 			children = (
+				2FA627EF2BE7F9460044272C /* Helper */,
 				2F590C782BE292EC000BBACE /* ProxyHTTPServer */,
 				2F30B29B2B725E5E00AB8496 /* Error */,
 				2F30B2982B725B3200AB8496 /* Util */,
@@ -115,6 +118,14 @@
 				2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */,
 			);
 			path = ProxyHTTPServer;
+			sourceTree = "<group>";
+		};
+		2FA627EF2BE7F9460044272C /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +208,7 @@
 				2F30B29D2B725E6700AB8496 /* SocketError.swift in Sources */,
 				2F153F682B711C1800B87430 /* AppDelegate.swift in Sources */,
 				2F153F6A2B711C1800B87430 /* SceneDelegate.swift in Sources */,
+				2FA627F12BE7F9720044272C /* ReverserProxyUrlMaker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

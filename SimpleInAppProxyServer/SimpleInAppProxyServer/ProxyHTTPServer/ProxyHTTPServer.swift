@@ -11,7 +11,8 @@ import UIKit
 protocol ProxyHttpServerInterface {
     func startProxyServer(requestHandler : ((Data,(Data) -> ()) -> ())?)
     func closeProxyServer()
-    
+    func setOriginUrlHost(url : URL)
+    func setOriginUrlQueryKey(key : String)
     var requestHandler : ((Data,(Data) -> ()) -> ())? { get set }
     
 }
@@ -56,6 +57,15 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
             clientSocket.close()
             self.clientSocket = nil
         }
+    }
+    
+    func setOriginUrlHost(url: URL) {
+        guard let urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
+        self.originURLHost = urlComponent.host
+    }
+    
+    func setOriginUrlQueryKey(key: String) {
+        self.originURLKey = key
     }
     
     private func destroyAndRemakeClientSocket() {

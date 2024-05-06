@@ -47,6 +47,52 @@ import Foundation
 
 class HLSParser {
     
+    //https://livecloud.pstatic.net/selective/lip2_kr/anmss1226/6frpwuipzbjzpwwrc5kboysyrdnzexxb8sj5/
+    private let originUrlHost : String
+    private let originUrlQueryKey : String
+    
+    init(originUrlHost : String, originUrlQueryKey : String){
+        self.originUrlHost = originUrlHost
+        self.originUrlQueryKey = originUrlQueryKey
+    }
+    
+    func makeReversedProxyMasterPlaylistM3U8(data : Data, completion : @escaping (Data) -> ()) {
+        guard let requestString = String(data: data, encoding: .utf8) else {
+            completion(Data())
+            return
+        }
+        
+        guard requestString.contains(".m3u8") else {
+            completion(Data())
+            return
+        }
+        
+        
+        let reversedPlayList = requestString.components(separatedBy: .newlines)
+            .map({ line in
+                return makeReversedProxyM3u8ResolutionPath(resolutionPath: line)
+            })
+            .joined(separator: "\n")
+
+        guard let result = reversedPlayList.data(using: .utf8) else {
+            completion(Data())
+            return
+        }
+        completion(result)
+    }
+    
+    private func makeReversedProxyM3u8ResolutionPath(resolutionPath : String) -> String {
+        guard resolutionPath.isEmpty == false else {
+            return resolutionPath
+        }
+        
+        guard resolutionPath.contains(".m3u8") && resolutionPath.contains("#") == false else {
+            return resolutionPath
+        }
+        
+        return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)?\(resolutionPath)"
+    }
+    
     
     func playerListParser(data : Data, completion : @escaping (Data) -> ()) {
         guard let requestString = String(data: data, encoding: .utf8) else {
@@ -55,13 +101,10 @@ class HLSParser {
             return
         }
         
-        let parsed = requestString.components(separatedBy: " ")
-        
-        
-        
-        
-        
-        
-        
+        guard requestString.contains(".m3u8") else {
+            completion(Data())
+            return
+        }
     }
+    
 }

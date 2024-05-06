@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 
 protocol ProxyHttpServerInterface {
-    func startProxyServer(requestHandler : ((Data,(Data) -> ()) -> ())?)
+    func startProxyServer(requestHandler : ((Data,(Data) -> ()?) -> ())?)
     func closeProxyServer()
     func setOriginUrlHost(url : URL)
     func setOriginUrlQueryKey(key : String)
-    var requestHandler : ((Data,(Data) -> ()) -> ())? { get set }
+    var requestHandler : ((Data,(Data) -> ()?) -> ())? { get set }
     
 }
 
@@ -22,13 +22,13 @@ protocol ProxyHttpServerDelegate {
 }
 
 class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
-    typealias RequestHandler = ((Data, (Data) -> () ) -> ())
+    typealias RequestHandler = ((Data, (Data) -> ()? ) -> ())
     
     private var originURLKey = "originKey"
     private var originURLHost : String?
     private var serverSocket: ServerSocket?
     private var clientSocket : ClientSocket?
-    private var portNumber : Int = 8080
+    private var portNumber : Int = 8888
     
     var requestHandler: RequestHandler?
     
@@ -47,7 +47,13 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
             self.requestHandler = requestHandler
-            self.acceptAndCreateClientSocket()
+            do {
+                try self.serverSocket?.start()
+                self.acceptAndCreateClientSocket()
+            }
+            catch(let error) {
+                MyLogger.debug("error \(error)")
+            }
         }
     }
     
@@ -77,6 +83,7 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
     private func acceptAndCreateClientSocket() {
         do {
             self.clientSocket = try self.serverSocket?.acceptClientSocket()
+            self.handleRequestFromClientSocket(socket: clientSocket!)
         }
         catch(let error) {
             MyLogger.debug("error \(error)")
@@ -100,6 +107,7 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
                 return
             }
             
+            MyLogger.debug("\(String(data: requestData, encoding: .utf8)!)")
             requestHandler(requestData) { [weak self] responseData in
                 self?.sendResponseToClientSocket(responseData: responseData)
             }

@@ -22,18 +22,23 @@ class ViewController: UIViewController {
     
     private var player : AVPlayer?
     
+    private let originUrlQueryKey = "originKey"
+    private var originHostUrl : String = "https://livecloud.pstatic.net/selective/lip2_kr/anmss1226/6frpwuipzbjzpwwrc5kboysyrdnzexxb8sj5/"
+    lazy private var hlsParser = HLSParser(originUrlHost: originHostUrl, originUrlQueryKey: originUrlQueryKey)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setLayout()
         
-        proxyServer.startProxyServer { receivedData, response in
+        proxyServer.startProxyServer { [weak self] receivedData, response in
+            guard let requestString = String(data: receivedData, encoding: .utf8), let self = self else { return }
+            
             
             response(Data())
         }
         
-        guard let reverseUrl = ReverserProxyUrlMaker.makeReverProxyUrl(url: URL(string: "someUrl")!, originUrlQueryKey: "originKey") else { return }
+        guard let reverseUrl = ReverserProxyUrlMaker.makeReverProxyUrl(url: URL(string: "https://livecloud.pstatic.net/selective/lip2_kr/cnmss0207/imcm4aj96mr61ddyjmvu4hdqs6xbtd909wlz/playlist.m3u8?hdnts=st=1715009446~exp=1715041856~acl=*/imcm4aj96mr61ddyjmvu4hdqs6xbtd909wlz/*~hmac=889c9234e7f7318af957caabcb917a29a2bd7ceff92cf14562508dfa41cdbfbd")!, originUrlQueryKey: originUrlQueryKey) else { return }
         player = AVPlayer(url: reverseUrl )
         
         

@@ -45,6 +45,16 @@ import Foundation
 //720.stream_3679896847_1714927762424_2_0_1.ts?bitrate=320164&filetype=.ts
 
 
+
+//프록시로 들어온 마스터 플레이리스트 요청값
+//GET /selective/lip2_kr/cnmss0207/imcm4aj96mr61ddyjmvu4hdqs6xbtd909wlz/playlist.m3u8?originKey=https://livecloud.pstatic.net/selective/lip2_kr/cnmss0207/imcm4aj96mr61ddyjmvu4hdqs6xbtd909wlz/playlist.m3u8?hdnts%3Dst%3D1715009446~exp%3D1715041856~acl%3D*/imcm4aj96mr61ddyjmvu4hdqs6xbtd909wlz/*~hmac%3D889c9234e7f7318af957caabcb917a29a2bd7ceff92cf14562508dfa41cdbfbd HTTP/1.1
+//Host: 127.0.0.1:8888
+//X-Playback-Session-Id: 132F79B7-7376-4E91-B5E1-26B1417DE719
+//Accept: */*
+//User-Agent: AppleCoreMedia/1.0.0.21E213 (iPhone; U; CPU OS 17_4 like Mac OS X; ko_kr)
+//Accept-Language: ko-KR,ko;q=0.9
+//Accept-Encoding: gzip
+//Connection: keep-alive
 class HLSParser {
     
     //https://livecloud.pstatic.net/selective/lip2_kr/anmss1226/6frpwuipzbjzpwwrc5kboysyrdnzexxb8sj5/
@@ -58,15 +68,56 @@ class HLSParser {
         self.originUrlQueryKey = originUrlQueryKey
     }
     
-    func makeReversedProxyMasterPlaylistM3U8(data : Data, completion : @escaping (Data) -> ()) {
+    
+    func handleMasterPlayListM3U8(data : Data, completion : @escaping (Data) -> () ) {
         guard let requestString = String(data: data, encoding: .utf8) else {
             completion(data)
             return
         }
-        
-        guard requestString.contains(".m3u8") else {
+        let parsed = requestString.components(separatedBy: " ")
+        guard let path = parsed.filter({ $0.contains("m3u8")}).first,
+              let proxyUrl = URL(string: "https://\(self.originUrlHost)/\(path)"),
+              let proxyUrlComponent = URLComponents(url: proxyUrl, resolvingAgainstBaseURL: false),
+              let originUrl = self.parseOriginURL(from: proxyUrlComponent) else {
             completion(data)
             return
+        }
+        
+        
+    }
+    
+    func handleNormalPlayListM3U8() {
+        
+    }
+    
+    
+    private func parseOriginURL(from request: URLComponents) -> URL? {
+        var encodedURLString : String?
+        guard let queryArray = request.queryItems else { return nil }
+        for queryItems in queryArray {
+            if queryItems.name == self.originUrlQueryKey, let value = queryItems.value {
+                encodedURLString = value
+            }
+        }
+        guard let encodedURLString = encodedURLString else { return nil }
+        guard let urlString = encodedURLString.removingPercentEncoding else { return nil }
+        let url = URL(string: urlString)
+        return url
+    }
+    
+    
+    
+    
+}
+//MARK: - masterPlayList Reverse
+extension HLSParser {
+    private func makeReversedProxyMasterPlaylistM3U8(data : Data ) -> Data {
+        guard let requestString = String(data: data, encoding: .utf8) else {
+            return data
+        }
+        
+        guard requestString.contains(".m3u8") else {
+            return data
         }
         
         
@@ -77,10 +128,9 @@ class HLSParser {
             .joined(separator: "\n")
 
         guard let result = reversedPlayList.data(using: .utf8) else {
-            completion(data)
-            return
+            return data
         }
-        completion(result)
+        return result
     }
     
     private func makeReversedProxyM3u8ResolutionPath(resolutionPath : String) -> String {
@@ -96,18 +146,17 @@ class HLSParser {
         tsFileBaseQuerySet.insert(parsed[0])
         return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)?\(resolutionPath)"
     }
+}
+//MARK: - playList reverse
+extension HLSParser {
     
-    
-    func playerListParser(data : Data, completion : @escaping (Data) -> ()) {
+    private func makeReversedProxyNormalPlayListM3U8(data : Data) -> Data {
         guard let requestString = String(data: data, encoding: .utf8) else {
-            //TODO: - 나중에 404 같은거라도 보내야하나
-            completion(data)
-            return
+            return data
         }
         
         guard requestString.contains(".m3u8") else {
-            completion(data)
-            return
+            return data
         }
         
         let reversedPlayList = requestString.components(separatedBy: .newlines)
@@ -117,9 +166,9 @@ class HLSParser {
             .joined(separator: "\n")
         
         guard let result = reversedPlayList.data(using: .utf8) else {
-            completion(data)
-            return
+            return data
         }
+        return result
     }
     
     private func makeReversedProxyTsPath(tsPath : String) -> String {

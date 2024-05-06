@@ -51,6 +51,8 @@ class HLSParser {
     private let originUrlHost : String
     private let originUrlQueryKey : String
     
+    private var tsFileBaseQuerySet: Set<String> = []
+    
     init(originUrlHost : String, originUrlQueryKey : String){
         self.originUrlHost = originUrlHost
         self.originUrlQueryKey = originUrlQueryKey
@@ -58,12 +60,12 @@ class HLSParser {
     
     func makeReversedProxyMasterPlaylistM3U8(data : Data, completion : @escaping (Data) -> ()) {
         guard let requestString = String(data: data, encoding: .utf8) else {
-            completion(Data())
+            completion(data)
             return
         }
         
         guard requestString.contains(".m3u8") else {
-            completion(Data())
+            completion(data)
             return
         }
         
@@ -75,7 +77,7 @@ class HLSParser {
             .joined(separator: "\n")
 
         guard let result = reversedPlayList.data(using: .utf8) else {
-            completion(Data())
+            completion(data)
             return
         }
         completion(result)
@@ -90,6 +92,8 @@ class HLSParser {
             return resolutionPath
         }
         
+        let parsed = resolutionPath.components(separatedBy: "/")
+        tsFileBaseQuerySet.insert(parsed[0])
         return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)?\(resolutionPath)"
     }
     
@@ -97,14 +101,44 @@ class HLSParser {
     func playerListParser(data : Data, completion : @escaping (Data) -> ()) {
         guard let requestString = String(data: data, encoding: .utf8) else {
             //TODO: - 나중에 404 같은거라도 보내야하나
-            completion(Data())
+            completion(data)
             return
         }
         
         guard requestString.contains(".m3u8") else {
-            completion(Data())
+            completion(data)
+            return
+        }
+        
+        let reversedPlayList = requestString.components(separatedBy: .newlines)
+            .map({ line in
+                return makeReversedProxyTsPath(tsPath: line)
+            })
+            .joined(separator: "\n")
+        
+        guard let result = reversedPlayList.data(using: .utf8) else {
+            completion(data)
             return
         }
     }
     
+    private func makeReversedProxyTsPath(tsPath : String) -> String {
+        guard tsPath.isEmpty == false else {
+            return tsPath
+        }
+        
+        guard tsPath.contains(".ts") && tsPath.contains("#") == false else {
+            return tsPath
+        }
+        
+        let parsed = tsPath.components(separatedBy: ".")
+        
+        guard let resolution = Int(parsed[0]) else {
+            return tsPath
+        }
+        
+        let baseQuery = tsFileBaseQuerySet.filter({ $0.contains(String(resolution)) })
+        
+        return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)/\(baseQuery)/\(tsPath)"
+    }
 }

@@ -108,7 +108,6 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
                 return
             }
             
-            MyLogger.debug("\(String(data: requestData, encoding: .utf8)!)")
             let requestHandler: ()? = requestHandler?(requestData) { [weak self] data in
                 self?.sendResponseToClientSocket(responseData: data)
             }

@@ -105,7 +105,33 @@ class HLSParser {
         }
     }
     
-    func handleNormalPlayListM3U8() {
+    func handleNormalPlayListM3U8(data : Data, completion : @escaping (Data) -> ()) {
+        guard let requestString = String(data: data, encoding: .utf8) else  {
+            completion(data)
+            return
+        }
+        let parsed = requestString.components(separatedBy: " ")
+        guard let path = parsed.filter({ $0.contains(".m3u8")}).first,
+              let proxyUrl = URL(string: "https://\(self.originUrlHost)/\(path)"),
+              let proxyUrlComponent = URLComponents(url: proxyUrl, resolvingAgainstBaseURL: false),
+              let originUrl = self.parseOriginURL(from: proxyUrlComponent) else {
+            completion(data)
+            return
+        }
+        
+        let request = URLRequest(url: originUrl)
+        let task = self.urlSession.dataTask(with: request) { [weak self] result , response , error  in
+            guard let result = result, let _ = response, let self = self else {
+                completion(data)
+                return
+            }
+            let proxyData = self.makeReversedProxyNormalPlayListM3U8(data: result)
+            completion(proxyData)
+        }
+        
+        DispatchQueue.global(qos: .background).async {
+            task.resume()
+        }
         
     }
     
@@ -161,8 +187,7 @@ extension HLSParser {
             return resolutionPath
         }
         
-        let parsed = resolutionPath.components(separatedBy: "/")
-        tsFileBaseQuerySet.insert(parsed[0])
+        tsFileBaseQuerySet.insert(resolutionPath)
         return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)\(resolutionPath)"
     }
 }
@@ -171,10 +196,6 @@ extension HLSParser {
     
     private func makeReversedProxyNormalPlayListM3U8(data : Data) -> Data {
         guard let requestString = String(data: data, encoding: .utf8) else {
-            return data
-        }
-        
-        guard requestString.contains(".m3u8") else {
             return data
         }
         
@@ -205,7 +226,7 @@ extension HLSParser {
             return tsPath
         }
         
-        let baseQuery = tsFileBaseQuerySet.filter({ $0.contains(String(resolution)) })
+        let baseQuery = tsFileBaseQuerySet.filter({ $0.contains(String(resolution)) }).first ?? ""
         
         return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)/\(baseQuery)/\(tsPath)"
     }

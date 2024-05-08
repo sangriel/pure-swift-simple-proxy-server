@@ -19,6 +19,8 @@ class ViewController: UIViewController {
     }()
     
     private let proxyServer = ProxyHTTPServer()
+    private let socketRequestParser = SocketRequestParser()
+    
     
     private var player : AVPlayer?
     
@@ -33,6 +35,13 @@ class ViewController: UIViewController {
         
         proxyServer.startProxyServer { [weak self] receivedData, response in
             guard let requestString = String(data: receivedData, encoding: .utf8), let self = self else { return }
+            let socketRequest = socketRequestParser.requestParser(requestString: requestString)
+            
+            if socketRequest.path.contains("m3u8") {
+                hlsParser.handleMasterPlayListM3U8(data: receivedData) { response  in
+                    
+                }
+            }
             
             
             response(Data())
@@ -43,7 +52,7 @@ class ViewController: UIViewController {
         
         
     }
-
+    
 
 }
 extension ViewController {

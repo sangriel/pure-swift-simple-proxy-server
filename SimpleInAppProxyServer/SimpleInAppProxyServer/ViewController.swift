@@ -46,7 +46,7 @@ class ViewController: UIViewController {
             }
             
             
-            response(Data())
+            response?(Data())
         }
         
         guard let reverseUrl = ReverserProxyUrlMaker.makeReverProxyUrl(url: URL(string: "https://livecloud.pstatic.net/selective/lip2_kr/cnmss0207/imcm4aj96mr61ddyjmvu4hdqs6xbtd909wlz/playlist.m3u8?hdnts=st=1715009446~exp=1715041856~acl=*/imcm4aj96mr61ddyjmvu4hdqs6xbtd909wlz/*~hmac=889c9234e7f7318af957caabcb917a29a2bd7ceff92cf14562508dfa41cdbfbd")!, originUrlQueryKey: originUrlQueryKey) else { return }

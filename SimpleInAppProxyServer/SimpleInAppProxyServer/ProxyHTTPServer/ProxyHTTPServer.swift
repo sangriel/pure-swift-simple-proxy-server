@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 
 protocol ProxyHttpServerInterface {
-    func startProxyServer(requestHandler : ((Data,(Data) -> ()?) -> ())?)
+    func startProxyServer(requestHandler : ((Data,((Data) -> ())?) -> ())?)
     func closeProxyServer()
     func setOriginUrlHost(url : URL)
     func setOriginUrlQueryKey(key : String)
-    var requestHandler : ((Data,(Data) -> ()?) -> ())? { get set }
+    var requestHandler : ((Data,((Data) -> ())?) -> ())? { get set }
     
 }
 
@@ -22,7 +22,7 @@ protocol ProxyHttpServerDelegate {
 }
 
 class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
-    typealias RequestHandler = ((Data, (Data) -> ()? ) -> ())
+    typealias RequestHandler = ((Data, ((Data) -> ())? ) -> ())
     
     private var originURLKey = "originKey"
     private var originURLHost : String?
@@ -108,13 +108,14 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
             }
             
             MyLogger.debug("\(String(data: requestData, encoding: .utf8)!)")
-            requestHandler?(requestData) { [weak self] responseData in
-                self?.sendResponseToClientSocket(responseData: responseData)
+            let requestHandler: ()? = requestHandler?(requestData) { [weak self] data in
+                self?.sendResponseToClientSocket(responseData: data)
             }
-//            guard let requestHandler = requestHandler else {
-//                delegate?.proxyHttpServer(onError: .requestHandlerNotImplemented)
-//                return
-//            }
+            guard let requestHandler = requestHandler else {
+                delegate?.proxyHttpServer(onError: .requestHandlerNotImplemented)
+                return
+            }
+            requestHandler
 //            requestHandler(requestData) { [weak self] responseData in
 //                
 //            }

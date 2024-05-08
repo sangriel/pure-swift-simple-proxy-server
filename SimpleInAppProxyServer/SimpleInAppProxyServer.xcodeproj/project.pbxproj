@@ -17,6 +17,8 @@
 		2F30B29A2B725B8400AB8496 /* MyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B2992B725B8400AB8496 /* MyLogger.swift */; };
 		2F30B29D2B725E6700AB8496 /* SocketError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B29C2B725E6600AB8496 /* SocketError.swift */; };
 		2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F30B29E2B72606900AB8496 /* ClientSocket.swift */; };
+		2F4D99D12BEBC4C70097DE5C /* SocketRequestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D99D02BEBC4C70097DE5C /* SocketRequestParser.swift */; };
+		2F4D99D42BEBC5120097DE5C /* SocketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D99D32BEBC5120097DE5C /* SocketRequest.swift */; };
 		2F590C7A2BE292F8000BBACE /* ProxyHTTPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */; };
 		2FA627EE2BE7F77D0044272C /* ProxyServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */; };
 		2FA627F12BE7F9720044272C /* ReverserProxyUrlMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */; };
@@ -47,6 +49,8 @@
 		2F30B2992B725B8400AB8496 /* MyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLogger.swift; sourceTree = "<group>"; };
 		2F30B29C2B725E6600AB8496 /* SocketError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketError.swift; sourceTree = "<group>"; };
 		2F30B29E2B72606900AB8496 /* ClientSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientSocket.swift; sourceTree = "<group>"; };
+		2F4D99D02BEBC4C70097DE5C /* SocketRequestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRequestParser.swift; sourceTree = "<group>"; };
+		2F4D99D32BEBC5120097DE5C /* SocketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRequest.swift; sourceTree = "<group>"; };
 		2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyHTTPServer.swift; sourceTree = "<group>"; };
 		2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyServerError.swift; sourceTree = "<group>"; };
 		2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverserProxyUrlMaker.swift; sourceTree = "<group>"; };
@@ -94,6 +98,7 @@
 		2F153F662B711C1800B87430 /* SimpleInAppProxyServer */ = {
 			isa = PBXGroup;
 			children = (
+				2F4D99D22BEBC5090097DE5C /* Model */,
 				2FA627EF2BE7F9460044272C /* Helper */,
 				2F590C782BE292EC000BBACE /* ProxyHTTPServer */,
 				2F30B29B2B725E5E00AB8496 /* Error */,
@@ -123,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				2F30B2992B725B8400AB8496 /* MyLogger.swift */,
+				2F4D99D02BEBC4C70097DE5C /* SocketRequestParser.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -134,6 +140,14 @@
 				2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		2F4D99D22BEBC5090097DE5C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2F4D99D32BEBC5120097DE5C /* SocketRequest.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		2F590C782BE292EC000BBACE /* ProxyHTTPServer */ = {
@@ -264,6 +278,7 @@
 			files = (
 				2F153F6C2B711C1800B87430 /* ViewController.swift in Sources */,
 				2FA627EE2BE7F77D0044272C /* ProxyServerError.swift in Sources */,
+				2F4D99D42BEBC5120097DE5C /* SocketRequest.swift in Sources */,
 				2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */,
 				2F153F7D2B711E4900B87430 /* ServerSocket.swift in Sources */,
 				2F590C7A2BE292F8000BBACE /* ProxyHTTPServer.swift in Sources */,
@@ -273,6 +288,7 @@
 				2F153F6A2B711C1800B87430 /* SceneDelegate.swift in Sources */,
 				2FA627F12BE7F9720044272C /* ReverserProxyUrlMaker.swift in Sources */,
 				2FA628002BE7FF700044272C /* HLSParser.swift in Sources */,
+				2F4D99D12BEBC4C70097DE5C /* SocketRequestParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

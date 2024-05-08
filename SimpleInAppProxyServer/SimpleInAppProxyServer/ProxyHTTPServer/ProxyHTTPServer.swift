@@ -35,6 +35,7 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
     var delegate : ProxyHttpServerDelegate?
     
     override init() {
+        super.init()
         do {
             serverSocket = try ServerSocket(port: UInt16(portNumber))
         }
@@ -116,9 +117,6 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
                 return
             }
             requestHandler
-//            requestHandler(requestData) { [weak self] responseData in
-//                
-//            }
         }
         catch(let error) {
             MyLogger.debug("error \(error)")
@@ -127,7 +125,11 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
     
     private func sendResponseToClientSocket(responseData : Data) {
         do {
-            try clientSocket?.send(data: responseData)
+            try clientSocket?.send(data: responseData) {
+                self.destroyAndRemakeClientSocket()
+            }
+            
+            
         }
         catch(let error) {
             MyLogger.debug("clientResponse error \(error)")

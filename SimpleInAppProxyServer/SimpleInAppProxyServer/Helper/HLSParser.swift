@@ -96,7 +96,12 @@ class HLSParser {
             }
             
             let proxyData = self.makeReversedProxyMasterPlaylistM3U8(data: result)
-            print(String(data: proxyData, encoding: .utf8))
+            
+            completion(proxyData)
+        }
+        
+        DispatchQueue.global(qos: .background).async {
+            task.resume()
         }
     }
     
@@ -158,7 +163,7 @@ extension HLSParser {
         
         let parsed = resolutionPath.components(separatedBy: "/")
         tsFileBaseQuerySet.insert(parsed[0])
-        return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)?\(resolutionPath)"
+        return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)\(resolutionPath)"
     }
 }
 //MARK: - playList reverse

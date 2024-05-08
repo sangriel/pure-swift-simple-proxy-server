@@ -102,15 +102,22 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
                 return
             }
             
-            guard let requestHandler = requestHandler else {
+            if requestHandler == nil {
                 delegate?.proxyHttpServer(onError: .requestHandlerNotImplemented)
                 return
             }
             
             MyLogger.debug("\(String(data: requestData, encoding: .utf8)!)")
-            requestHandler(requestData) { [weak self] responseData in
+            requestHandler?(requestData) { [weak self] responseData in
                 self?.sendResponseToClientSocket(responseData: responseData)
             }
+//            guard let requestHandler = requestHandler else {
+//                delegate?.proxyHttpServer(onError: .requestHandlerNotImplemented)
+//                return
+//            }
+//            requestHandler(requestData) { [weak self] responseData in
+//                
+//            }
         }
         catch(let error) {
             MyLogger.debug("error \(error)")

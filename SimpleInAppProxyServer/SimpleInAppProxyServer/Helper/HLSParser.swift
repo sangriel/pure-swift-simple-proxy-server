@@ -63,6 +63,11 @@ class HLSParser {
     
     private var tsFileBaseQuerySet: Set<String> = []
     
+    private var urlSession : URLSession = {
+        let session = URLSession(configuration: .default)
+        return session
+    }()
+    
     init(originUrlHost : String, originUrlQueryKey : String){
         self.originUrlHost = originUrlHost
         self.originUrlQueryKey = originUrlQueryKey
@@ -83,7 +88,16 @@ class HLSParser {
             return
         }
         
-        
+        let request = URLRequest(url: originUrl)
+        let task = self.urlSession.dataTask(with: request) { [weak self] result , response , error  in
+            guard let result = result, let _ = response, let self = self else {
+                completion(data)
+                return
+            }
+            
+            let proxyData = self.makeReversedProxyMasterPlaylistM3U8(data: result)
+            print(String(data: proxyData, encoding: .utf8))
+        }
     }
     
     func handleNormalPlayListM3U8() {

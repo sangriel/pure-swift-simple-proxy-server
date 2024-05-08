@@ -34,7 +34,9 @@ class ViewController: UIViewController {
         setLayout()
         
         proxyServer.startProxyServer { [weak self] receivedData, response in
-            guard let requestString = String(data: receivedData, encoding: .utf8), let self = self else { return }
+            guard let requestString = String(data: receivedData, encoding: .utf8), let self = self else {
+                return
+            }
             let socketRequest = socketRequestParser.requestParser(requestString: requestString)
             
             if socketRequest.path.contains("m3u8") {

@@ -165,15 +165,16 @@ class HLSParser {
             return
         }
         
-        let request = URLRequest(url: originUrl)
-        
+        var request = URLRequest(url: originUrl)
+        request.httpMethod = "GET"
+        MyLogger.debug("ts url Sgtring \(originUrl)")
         let task = self.urlSession.dataTask(with: request) { result, response, error in
             guard let result = result else {
                 completion(data)
                 return
             }
             
-            completion(data)
+            completion(result)
         }
         
         DispatchQueue.main.async {
@@ -272,7 +273,7 @@ extension HLSParser {
         }
         
         let baseQuery = tsFileBaseQuerySet.filter({ $0.contains(String(resolution)) }).first ?? ""
-        
-        return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)/\(baseQuery)/\(tsPath)"
+        let resolutionPath = baseQuery.components(separatedBy: "/")[0]
+        return "http://127.0.0.1:8888?\(originUrlQueryKey)=\(self.originUrlHost)\(resolutionPath)/\(tsPath)"
     }
 }

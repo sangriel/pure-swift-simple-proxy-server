@@ -33,9 +33,8 @@ class ViewController: UIViewController {
     private var playerLayer : AVPlayerLayer = AVPlayerLayer()
     
     
-    
     private let originUrlQueryKey = "originKey"
-    private var originHostUrl : String = "https://livecloud.pstatic.net/selective/lip2_kr/cnmss9280/j46qka8vmaq7vmechpsailme3svmh2nzp9dh/"
+    private var originHostUrl : String = "https://livecloud.pstatic.net/selective/lip2_kr/anmss1181/h7g2jji3sgtxvvixvpi91rpibdj6zp4znqad/"
     lazy private var hlsParser = HLSParser(originUrlHost: originHostUrl, originUrlQueryKey: originUrlQueryKey)
     
     override func viewDidLoad() {
@@ -50,12 +49,12 @@ class ViewController: UIViewController {
             MyLogger.debug("request String from avplayer \n \(requestString)")
             let socketRequest = socketRequestParser.requestParser(requestString: requestString)
             
-            if socketRequest.path.contains("stream.m3u8") {
+            if socketRequest.path.contains("stream.m3u8") && socketRequest.path.contains(".ts") == false {
                 hlsParser.handleNormalPlayListM3U8(data: receivedData) { responseData  in
                     response?(responseData)
                 }
             }
-            else if socketRequest.path.contains(".m3u8") {
+            else if socketRequest.path.contains(".m3u8") && socketRequest.path.contains(".ts") == false{
                 hlsParser.handleMasterPlayListM3U8(data: receivedData) { responseData  in
                     MyLogger.debug("masterPlaylistProxyData  \n \(String(data: responseData, encoding: .utf8)!)")
                     response?(responseData)
@@ -63,13 +62,12 @@ class ViewController: UIViewController {
             }
             else {
                 hlsParser.handleTsFile(data: receivedData) { responseData in
-                    MyLogger.debug("tsData  \n \(String(data: responseData, encoding: .utf8)!)")
                     response?(responseData)
                 }
             }
         }
         
-        guard let reverseUrl = ReverserProxyUrlMaker.makeReverProxyUrl(url: URL(string: "https://livecloud.pstatic.net/selective/lip2_kr/cnmss9280/j46qka8vmaq7vmechpsailme3svmh2nzp9dh/playlist.m3u8?hdnts=st=1715351906~exp=1715384316~acl=*/j46qka8vmaq7vmechpsailme3svmh2nzp9dh/*~hmac=fbefaa48249f356f96ab061049598ebd9b4885d2db0f7cad6efb6839d8c52259")!, originUrlQueryKey: originUrlQueryKey) else { return }
+        guard let reverseUrl = ReverserProxyUrlMaker.makeReverProxyUrl(url: URL(string: "https://livecloud.pstatic.net/selective/lip2_kr/anmss1181/h7g2jji3sgtxvvixvpi91rpibdj6zp4znqad/playlist.m3u8?hdnts=st=1715353496~exp=1715385906~acl=*/h7g2jji3sgtxvvixvpi91rpibdj6zp4znqad/*~hmac=88584d5565177b7a6e0163f99a00ec7527a2c0edc2dcd4988b1f6d0c834ee77b")!, originUrlQueryKey: originUrlQueryKey) else { return }
         player = AVPlayer(url: reverseUrl )
         
         

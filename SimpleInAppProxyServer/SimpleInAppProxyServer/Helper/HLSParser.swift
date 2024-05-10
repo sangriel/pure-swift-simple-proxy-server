@@ -100,6 +100,7 @@ class HLSParser {
             return
         }
         
+        
         let request = URLRequest(url: originUrl)
         let task = self.urlSession.dataTask(with: request) { [weak self] result , response , error  in
             guard let result = result, let _ = response, let self = self else {
@@ -115,6 +116,7 @@ class HLSParser {
         DispatchQueue.global(qos: .background).async {
             task.resume()
         }
+        
     }
     
     func handleNormalPlayListM3U8(data : Data, completion : @escaping (Data) -> ()) {
@@ -165,20 +167,28 @@ class HLSParser {
             return
         }
         
-        var request = URLRequest(url: originUrl)
-        request.httpMethod = "GET"
-        let task = self.urlSession.dataTask(with: request) { result, response, error in
-            guard let result = result else {
-                completion(data)
-                return
+        if CacheManager.shared.findCachedData(url: originUrl.absoluteString) {
+            CacheManager.shared.getCachedData(url: originUrl.absoluteString) { result  in
+                MyLogger.debug("cache hit")
+                completion(result)
+            }
+        }
+        else {
+            var request = URLRequest(url: originUrl)
+            request.httpMethod = "GET"
+            let task = self.urlSession.dataTask(with: request) { result, response, error in
+                guard let result = result else {
+                    completion(data)
+                    return
+                }
+                completion(result)
             }
             
-            completion(result)
+            DispatchQueue.main.async {
+                task.resume()
+            }
         }
         
-        DispatchQueue.main.async {
-            task.resume()
-        } 
     }
     
     private func parseOriginURL(from request: URLComponents) -> URL? {

@@ -9,10 +9,11 @@ import Foundation
 import UIKit
 
 protocol ProxyHttpServerInterface {
-    func startProxyServer(requestHandler : ((Data,(Data) -> ()) -> ())?)
+    func startProxyServer(requestHandler : ((Data,((Data) -> ())?) -> ())?)
     func closeProxyServer()
-    
-    var requestHandler : ((Data,(Data) -> ()) -> ())? { get set }
+    func setOriginUrlHost(url : URL)
+    func setOriginUrlQueryKey(key : String)
+    var requestHandler : ((Data,((Data) -> ())?) -> ())? { get set }
     
 }
 
@@ -21,19 +22,20 @@ protocol ProxyHttpServerDelegate {
 }
 
 class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
-    typealias RequestHandler = ((Data, (Data) -> () ) -> ())
+    typealias RequestHandler = ((Data, ((Data) -> ())? ) -> ())
     
-    private let originURLKey = "originKey"
+    private var originURLKey = "originKey"
     private var originURLHost : String?
     private var serverSocket: ServerSocket?
     private var clientSocket : ClientSocket?
-    private var portNumber : Int = 8080
+    private var portNumber : Int = 8888
     
     var requestHandler: RequestHandler?
     
     var delegate : ProxyHttpServerDelegate?
     
     override init() {
+        super.init()
         do {
             serverSocket = try ServerSocket(port: UInt16(portNumber))
         }
@@ -46,7 +48,13 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
             self.requestHandler = requestHandler
-            self.acceptAndCreateClientSocket()
+            do {
+                try self.serverSocket?.start()
+                self.acceptAndCreateClientSocket()
+            }
+            catch(let error) {
+                MyLogger.debug("error \(error)")
+            }
         }
     }
     
@@ -58,6 +66,15 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
         }
     }
     
+    func setOriginUrlHost(url: URL) {
+        guard let urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
+        self.originURLHost = urlComponent.host
+    }
+    
+    func setOriginUrlQueryKey(key: String) {
+        self.originURLKey = key
+    }
+    
     private func destroyAndRemakeClientSocket() {
         self.clientSocket?.close()
         self.clientSocket = nil
@@ -67,6 +84,7 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
     private func acceptAndCreateClientSocket() {
         do {
             self.clientSocket = try self.serverSocket?.acceptClientSocket()
+            self.handleRequestFromClientSocket(socket: clientSocket!)
         }
         catch(let error) {
             MyLogger.debug("error \(error)")
@@ -85,14 +103,19 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
                 return
             }
             
-            guard let requestHandler = requestHandler else {
+            if requestHandler == nil {
                 delegate?.proxyHttpServer(onError: .requestHandlerNotImplemented)
                 return
             }
             
-            requestHandler(requestData) { [weak self] responseData in
-                self?.sendResponseToClientSocket(responseData: responseData)
+            let requestHandler: ()? = requestHandler?(requestData) { [weak self] data in
+                self?.sendResponseToClientSocket(responseData: data)
             }
+            guard let requestHandler = requestHandler else {
+                delegate?.proxyHttpServer(onError: .requestHandlerNotImplemented)
+                return
+            }
+            requestHandler
         }
         catch(let error) {
             MyLogger.debug("error \(error)")
@@ -101,7 +124,11 @@ class ProxyHTTPServer : NSObject, ProxyHttpServerInterface {
     
     private func sendResponseToClientSocket(responseData : Data) {
         do {
-            try clientSocket?.send(data: responseData)
+            try clientSocket?.send(data: responseData) {
+                self.destroyAndRemakeClientSocket()
+            }
+            
+            
         }
         catch(let error) {
             MyLogger.debug("clientResponse error \(error)")

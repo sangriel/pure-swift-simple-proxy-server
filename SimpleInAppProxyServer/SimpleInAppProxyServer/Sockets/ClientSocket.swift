@@ -27,7 +27,7 @@ extension OutputStream {
 }
 
 protocol ClientSocketInterface {
-    func send(data : Data) throws
+    func send(data : Data, completion : @escaping () -> () ) throws
     func receive(maxLength : Int) throws -> Data?
     func close()
 }
@@ -63,12 +63,13 @@ class ClientSocket : NSObject, ClientSocketInterface {
     private let dispatchQueue = DispatchQueue(label: "myQueue",qos: .background ,autoreleaseFrequency: .never)
     
     
-    func send(data: Data) throws {
+    func send(data: Data, completion : @escaping () -> () ) throws {
         dispatchQueue.sync { [weak self] in
             var fileData : Data = data
             let preferredBufferSize : Int = 512 * 4
             while fileData.count > 0 {
                 if (self?.outputStream.hasSpaceAvailable ?? false) == false {
+                    completion()
                     break
                 }
                 var writeData : Data
@@ -82,9 +83,11 @@ class ClientSocket : NSObject, ClientSocketInterface {
                 writeData = fileData.prefix(writeBufferSize)
                 fileData = fileData.dropFirst(writeBufferSize)
                 if (self?.outputStream.write(data: writeData) ?? -1) < 0 {
+                    completion()
                     break
                 }
             }
+            completion()
         }
         
     }
@@ -113,6 +116,7 @@ extension ClientSocket : StreamDelegate {
         case .errorOccurred:
             MyLogger.debug("[ClientSocket] errorOccurred")
         case .hasSpaceAvailable, .openCompleted, .hasBytesAvailable :
+            MyLogger.debug("[ClientSocket] hasSpaceAvailable, .openCompleted, .hasBytesAvailable")
             break
         default:
             MyLogger.debug("[ClientSocket] default")

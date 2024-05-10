@@ -33,4 +33,14 @@ extension HLSParser {
         let url = URL(string: urlString)
         return url
     }
+    func getOriginUrlForM3U8(requestString : String) -> URL? {
+        let parsed = requestString.components(separatedBy: " ")
+        guard let path = parsed.filter({ $0.contains("m3u8")}).first,
+              let proxyUrl = URL(string: "https://\(self.originUrlHost)/\(path)"),
+              let proxyUrlComponent = URLComponents(url: proxyUrl, resolvingAgainstBaseURL: false),
+              let originUrl = self.parseOriginURL(from: proxyUrlComponent) else {
+            return nil
+        }
+        return originUrl
+    }
 }

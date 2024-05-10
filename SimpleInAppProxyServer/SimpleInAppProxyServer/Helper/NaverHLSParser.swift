@@ -90,15 +90,11 @@ class NaverHLSParser : HLSParser {
             completion(data)
             return
         }
-        let parsed = requestString.components(separatedBy: " ")
-        guard let path = parsed.filter({ $0.contains("m3u8")}).first,
-              let proxyUrl = URL(string: "https://\(self.originUrlHost)/\(path)"),
-              let proxyUrlComponent = URLComponents(url: proxyUrl, resolvingAgainstBaseURL: false),
-              let originUrl = self.parseOriginURL(from: proxyUrlComponent) else {
+        
+        guard let originUrl = self.getOriginUrlForM3U8(requestString: requestString) else {
             completion(data)
             return
         }
-        
         
         let request = URLRequest(url: originUrl)
         let task = self.urlSession.dataTask(with: request) { [weak self] result , response , error  in
@@ -123,11 +119,8 @@ class NaverHLSParser : HLSParser {
             completion(data)
             return
         }
-        let parsed = requestString.components(separatedBy: " ")
-        guard let path = parsed.filter({ $0.contains(".m3u8")}).first,
-              let proxyUrl = URL(string: "https://\(self.originUrlHost)/\(path)"),
-              let proxyUrlComponent = URLComponents(url: proxyUrl, resolvingAgainstBaseURL: false),
-              let originUrl = self.parseOriginURL(from: proxyUrlComponent) else {
+        
+        guard let originUrl = self.getOriginUrlForM3U8(requestString: requestString) else {
             completion(data)
             return
         }
@@ -189,23 +182,6 @@ class NaverHLSParser : HLSParser {
         }
         
     }
-    
-    private func parseOriginURL(from request: URLComponents) -> URL? {
-        var encodedURLString : String?
-        guard let queryArray = request.queryItems else { return nil }
-        for queryItems in queryArray {
-            if queryItems.name == self.originUrlQueryKey, let value = queryItems.value {
-                encodedURLString = value
-            }
-        }
-        guard let encodedURLString = encodedURLString else { return nil }
-        guard let urlString = encodedURLString.removingPercentEncoding else { return nil }
-        let url = URL(string: urlString)
-        return url
-    }
-    
-    
-    
     
 }
 //MARK: - masterPlayList Reverse

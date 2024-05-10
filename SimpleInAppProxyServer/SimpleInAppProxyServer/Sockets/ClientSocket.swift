@@ -56,10 +56,6 @@ class ClientSocket : NSObject, ClientSocketInterface {
         inputStream.delegate = self
     }
     
-    deinit {
-        MyLogger.debug("client socket deinit")
-    }
-    
     private let dispatchQueue = DispatchQueue(label: "myQueue",qos: .background ,autoreleaseFrequency: .never)
     
     
@@ -116,7 +112,7 @@ extension ClientSocket : StreamDelegate {
         case .errorOccurred:
             MyLogger.debug("[ClientSocket] errorOccurred")
         case .hasSpaceAvailable, .openCompleted, .hasBytesAvailable :
-            MyLogger.debug("[ClientSocket] hasSpaceAvailable, .openCompleted, .hasBytesAvailable")
+//            MyLogger.debug("[ClientSocket] hasSpaceAvailable, .openCompleted, .hasBytesAvailable")
             break
         default:
             MyLogger.debug("[ClientSocket] default")

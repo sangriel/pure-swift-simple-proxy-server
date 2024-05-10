@@ -23,6 +23,16 @@ class ViewController: UIViewController {
     
     
     private var player : AVPlayer?
+    private var playerView : UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .red
+        return view
+    }()
+    
+    private var playerLayer : AVPlayerLayer = AVPlayerLayer()
+    
+    
     
     private let originUrlQueryKey = "originKey"
     private var originHostUrl : String = "https://livecloud.pstatic.net/selective/lip2_kr/cnmss9280/j46qka8vmaq7vmechpsailme3svmh2nzp9dh/"
@@ -53,6 +63,7 @@ class ViewController: UIViewController {
             }
             else {
                 hlsParser.handleTsFile(data: receivedData) { responseData in
+                    MyLogger.debug("tsData  \n \(String(data: responseData, encoding: .utf8)!)")
                     response?(responseData)
                 }
             }
@@ -64,17 +75,36 @@ class ViewController: UIViewController {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.playerView.layer.addSublayer(playerLayer)
+        playerLayer.frame = self.playerView.bounds
+        playerLayer.player = player
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        player?.play()
+    }
 
 }
 extension ViewController {
     private func setLayout() {
         self.view.addSubview(imageView)
+        self.view.addSubview(playerView)
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: self.view.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: self.view.centerYAnchor)
+            imageView.bottomAnchor.constraint(equalTo: self.view.centerYAnchor),
+            
+            
+            playerView.topAnchor.constraint(equalTo: imageView.bottomAnchor),
+            playerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            playerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            playerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
     }

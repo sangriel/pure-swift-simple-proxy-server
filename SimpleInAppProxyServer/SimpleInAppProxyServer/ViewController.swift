@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     
     private let originUrlQueryKey = "originKey"
     private var originHostUrl : String = "https://livecloud.pstatic.net/selective/lip2_kr/anmss1181/h7g2jji3sgtxvvixvpi91rpibdj6zp4znqad/"
-    lazy private var hlsParser = HLSParser(originUrlHost: originHostUrl, originUrlQueryKey: originUrlQueryKey)
+    lazy private var naverhlsParser : HLSParser = NaverHLSParser(originUrlHost: originHostUrl, originUrlQueryKey: originUrlQueryKey)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,17 +49,17 @@ class ViewController: UIViewController {
             let socketRequest = socketRequestParser.requestParser(requestString: requestString)
             
             if socketRequest.path.contains("stream.m3u8") && socketRequest.path.contains(".ts") == false {
-                hlsParser.handleNormalPlayListM3U8(data: receivedData) { responseData  in
+                naverhlsParser.handleNormalPlayListM3U8(data: receivedData) { responseData  in
                     response?(responseData)
                 }
             }
             else if socketRequest.path.contains(".m3u8") && socketRequest.path.contains(".ts") == false{
-                hlsParser.handleMasterPlayListM3U8(data: receivedData) { responseData in
+                naverhlsParser.handleMasterPlayListM3U8(data: receivedData) { responseData in
                     response?(responseData)
                 }
             }
             else {
-                hlsParser.handleTsFile(data: receivedData) { responseData in
+                naverhlsParser.handleTsFile(data: receivedData) { responseData in
                     response?(responseData)
                 }
             }

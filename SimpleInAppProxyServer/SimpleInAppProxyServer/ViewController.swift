@@ -46,7 +46,6 @@ class ViewController: UIViewController {
             guard let requestString = String(data: receivedData, encoding: .utf8), let self = self else {
                 return
             }
-            MyLogger.debug("request String from avplayer \n \(requestString)")
             let socketRequest = socketRequestParser.requestParser(requestString: requestString)
             
             if socketRequest.path.contains("stream.m3u8") && socketRequest.path.contains(".ts") == false {
@@ -55,8 +54,7 @@ class ViewController: UIViewController {
                 }
             }
             else if socketRequest.path.contains(".m3u8") && socketRequest.path.contains(".ts") == false{
-                hlsParser.handleMasterPlayListM3U8(data: receivedData) { responseData  in
-                    MyLogger.debug("masterPlaylistProxyData  \n \(String(data: responseData, encoding: .utf8)!)")
+                hlsParser.handleMasterPlayListM3U8(data: receivedData) { responseData in
                     response?(responseData)
                 }
             }

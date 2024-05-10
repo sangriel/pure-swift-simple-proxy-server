@@ -167,7 +167,6 @@ class HLSParser {
         
         var request = URLRequest(url: originUrl)
         request.httpMethod = "GET"
-        MyLogger.debug("ts url Sgtring \(originUrl)")
         let task = self.urlSession.dataTask(with: request) { result, response, error in
             guard let result = result else {
                 completion(data)

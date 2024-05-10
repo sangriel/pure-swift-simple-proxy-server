@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     private var player : AVPlayer?
     
     private let originUrlQueryKey = "originKey"
-    private var originHostUrl : String = "https://livecloud.pstatic.net/selective/lip2_kr/anmss1244/3grsv5crbpyug9rdxh2rmdcog3owjk8qn4mw/"
+    private var originHostUrl : String = "https://livecloud.pstatic.net/selective/lip2_kr/cnmss9280/j46qka8vmaq7vmechpsailme3svmh2nzp9dh/"
     lazy private var hlsParser = HLSParser(originUrlHost: originHostUrl, originUrlQueryKey: originUrlQueryKey)
     
     override func viewDidLoad() {
@@ -52,12 +52,13 @@ class ViewController: UIViewController {
                 }
             }
             else {
-                
+                hlsParser.handleTsFile(data: receivedData) { responseData in
+                    response?(responseData)
+                }
             }
-            
         }
         
-        guard let reverseUrl = ReverserProxyUrlMaker.makeReverProxyUrl(url: URL(string: "https://livecloud.pstatic.net/selective/lip2_kr/anmss1244/3grsv5crbpyug9rdxh2rmdcog3owjk8qn4mw/playlist.m3u8?hdnts=st=1715180878~exp=1715213288~acl=*/3grsv5crbpyug9rdxh2rmdcog3owjk8qn4mw/*~hmac=0105459a2c390a63779b7d299bad3aae4217a5e1194eac53f5db71af89796a7a")!, originUrlQueryKey: originUrlQueryKey) else { return }
+        guard let reverseUrl = ReverserProxyUrlMaker.makeReverProxyUrl(url: URL(string: "https://livecloud.pstatic.net/selective/lip2_kr/cnmss9280/j46qka8vmaq7vmechpsailme3svmh2nzp9dh/playlist.m3u8?hdnts=st=1715351906~exp=1715384316~acl=*/j46qka8vmaq7vmechpsailme3svmh2nzp9dh/*~hmac=fbefaa48249f356f96ab061049598ebd9b4885d2db0f7cad6efb6839d8c52259")!, originUrlQueryKey: originUrlQueryKey) else { return }
         player = AVPlayer(url: reverseUrl )
         
         

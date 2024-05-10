@@ -55,6 +55,18 @@ import Foundation
 //Accept-Language: ko-KR,ko;q=0.9
 //Accept-Encoding: gzip
 //Connection: keep-alive
+
+
+//프록시로 들어온 ts 파일 요청값
+//request String from avplayer
+// GET /?originKey=https://livecloud.pstatic.net/selective/lip2_kr/cnmss9280/j46qka8vmaq7vmechpsailme3svmh2nzp9dh//hdntl=exp=1715384316~acl=*%2Fj46qka8vmaq7vmechpsailme3svmh2nzp9dh%2F*~data=hdntl~hmac=ea6161e2852284e86e0fc1a0882e76d955462bef748a6ab690d13d3f6e7bdb78/chunklist_720.stream.m3u8/720.stream_3179182285_1715352065957_5882_0_2941.ts?bitrate=167790&filetype=.ts HTTP/1.1
+//Host: 127.0.0.1:8888
+//X-Playback-Session-Id: A32AE63F-E249-4BCD-96B9-2AF65AA12DEE
+//Accept: */*
+//User-Agent: AppleCoreMedia/1.0.0.21E213 (iPhone; U; CPU OS 17_4 like Mac OS X; ko_kr)
+//Accept-Language: ko-KR,ko;q=0.9
+//Accept-Encoding: identity
+//Connection: keep-alive
 class HLSParser {
     
     //https://livecloud.pstatic.net/selective/lip2_kr/anmss1226/6frpwuipzbjzpwwrc5kboysyrdnzexxb8sj5/
@@ -135,6 +147,39 @@ class HLSParser {
         
     }
     
+    func handleTsFile(data : Data, completion : @escaping (Data) -> ()) {
+        guard let requestString = String(data: data, encoding: .utf8) else {
+            completion(data)
+            return
+        }
+        
+        let parsed = requestString.components(separatedBy: " ")
+        guard let path = parsed.filter({ $0.contains(".ts") }).first else {
+            completion(data)
+            return
+        }
+        
+        let originUrlString = path.replacingOccurrences(of: "/?\(originUrlQueryKey)=", with: "")
+        guard let originUrl = URL(string: originUrlString) else {
+            completion(data)
+            return
+        }
+        
+        let request = URLRequest(url: originUrl)
+        
+        let task = self.urlSession.dataTask(with: request) { result, response, error in
+            guard let result = result else {
+                completion(data)
+                return
+            }
+            
+            completion(data)
+        }
+        
+        DispatchQueue.main.async {
+            task.resume()
+        } 
+    }
     
     private func parseOriginURL(from request: URLComponents) -> URL? {
         var encodedURLString : String?

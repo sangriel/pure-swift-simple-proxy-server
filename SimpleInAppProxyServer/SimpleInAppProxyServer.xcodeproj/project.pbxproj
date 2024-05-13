@@ -20,10 +20,11 @@
 		2F4D99D12BEBC4C70097DE5C /* SocketRequestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D99D02BEBC4C70097DE5C /* SocketRequestParser.swift */; };
 		2F4D99D42BEBC5120097DE5C /* SocketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4D99D32BEBC5120097DE5C /* SocketRequest.swift */; };
 		2F590C7A2BE292F8000BBACE /* ProxyHTTPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */; };
+		2F7809E42BEE73EC008B6578 /* HLSParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7809E32BEE73EC008B6578 /* HLSParser.swift */; };
 		2FA627EE2BE7F77D0044272C /* ProxyServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */; };
 		2FA627F12BE7F9720044272C /* ReverserProxyUrlMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */; };
 		2FA627F92BE7FB9E0044272C /* SimpleInAppProxyServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627F82BE7FB9E0044272C /* SimpleInAppProxyServerTests.swift */; };
-		2FA628002BE7FF700044272C /* HLSParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627FF2BE7FF700044272C /* HLSParser.swift */; };
+		2FA628002BE7FF700044272C /* NaverHLSParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA627FF2BE7FF700044272C /* NaverHLSParser.swift */; };
 		2FC712712BEE7146000FC7F6 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC712702BEE7146000FC7F6 /* CacheManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,11 +54,12 @@
 		2F4D99D02BEBC4C70097DE5C /* SocketRequestParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRequestParser.swift; sourceTree = "<group>"; };
 		2F4D99D32BEBC5120097DE5C /* SocketRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketRequest.swift; sourceTree = "<group>"; };
 		2F590C792BE292F8000BBACE /* ProxyHTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyHTTPServer.swift; sourceTree = "<group>"; };
+		2F7809E32BEE73EC008B6578 /* HLSParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLSParser.swift; sourceTree = "<group>"; };
 		2FA627ED2BE7F77D0044272C /* ProxyServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxyServerError.swift; sourceTree = "<group>"; };
 		2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverserProxyUrlMaker.swift; sourceTree = "<group>"; };
 		2FA627F62BE7FB9E0044272C /* SimpleInAppProxyServerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleInAppProxyServerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FA627F82BE7FB9E0044272C /* SimpleInAppProxyServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleInAppProxyServerTests.swift; sourceTree = "<group>"; };
-		2FA627FF2BE7FF700044272C /* HLSParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HLSParser.swift; sourceTree = "<group>"; };
+		2FA627FF2BE7FF700044272C /* NaverHLSParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverHLSParser.swift; sourceTree = "<group>"; };
 		2FC712702BEE7146000FC7F6 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -164,8 +166,9 @@
 			isa = PBXGroup;
 			children = (
 				2FA627F02BE7F9720044272C /* ReverserProxyUrlMaker.swift */,
-				2FA627FF2BE7FF700044272C /* HLSParser.swift */,
+				2FA627FF2BE7FF700044272C /* NaverHLSParser.swift */,
 				2FC712702BEE7146000FC7F6 /* CacheManager.swift */,
+				2F7809E32BEE73EC008B6578 /* HLSParser.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F153F6C2B711C1800B87430 /* ViewController.swift in Sources */,
+				2F7809E42BEE73EC008B6578 /* HLSParser.swift in Sources */,
 				2FA627EE2BE7F77D0044272C /* ProxyServerError.swift in Sources */,
 				2F4D99D42BEBC5120097DE5C /* SocketRequest.swift in Sources */,
 				2F30B29F2B72606900AB8496 /* ClientSocket.swift in Sources */,
@@ -291,7 +295,7 @@
 				2F153F682B711C1800B87430 /* AppDelegate.swift in Sources */,
 				2F153F6A2B711C1800B87430 /* SceneDelegate.swift in Sources */,
 				2FA627F12BE7F9720044272C /* ReverserProxyUrlMaker.swift in Sources */,
-				2FA628002BE7FF700044272C /* HLSParser.swift in Sources */,
+				2FA628002BE7FF700044272C /* NaverHLSParser.swift in Sources */,
 				2F4D99D12BEBC4C70097DE5C /* SocketRequestParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
